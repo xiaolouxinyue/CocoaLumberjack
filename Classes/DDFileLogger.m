@@ -55,14 +55,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDLogFileManagerDefault () {
-    NSUInteger _maximumNumberOfLogFiles;
-    unsigned long long _logFilesDiskQuota;
-    NSString *_logsDirectory;
-#if TARGET_OS_IPHONE
-    NSFileProtectionType _defaultFileProtectionLevel;
-#endif
-}
+@interface DDLogFileManagerDefault ()
 
 - (void)deleteOldLogFiles;
 - (NSString *)defaultLogsDirectory;
@@ -508,9 +501,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDLogFileFormatterDefault () {
-    NSDateFormatter *_dateFormatter;
-}
+@interface DDLogFileFormatterDefault () 
 
 @end
 
@@ -546,17 +537,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDFileLogger () {
-    __strong id <DDLogFileManager> _logFileManager;
-    
-    NSFileHandle *_currentLogFileHandle;
-    
-    dispatch_source_t _currentLogFileVnode;
-    dispatch_source_t _rollingTimer;
-    
-    unsigned long long _maximumFileSize;
-    NSTimeInterval _rollingFrequency;
-}
+@interface DDFileLogger () 
 
 - (void)rollLogFileNow;
 - (void)maybeRollLogFileDueToAge;
@@ -565,6 +546,9 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 @end
 
 @implementation DDFileLogger
+
+@synthesize automaticallyAppendNewlineForCustomFormatters = _automaticallyAppendNewlineForCustomFormatters;
+@synthesize doNotReuseLogFiles = _doNotReuseLogFiles;
 
 - (instancetype)init {
     DDLogFileManagerDefault *defaultLogFileManager = [[DDLogFileManagerDefault alloc] init];
@@ -1051,17 +1035,7 @@ static int exception_count = 0;
     static NSString * const kDDXAttrArchivedName = @"lumberjack.log.archived";
 #endif
 
-@interface DDLogFileInfo () {
-    __strong NSString *_filePath;
-    __strong NSString *_fileName;
-    
-    __strong NSDictionary *_fileAttributes;
-    
-    __strong NSDate *_creationDate;
-    __strong NSDate *_modificationDate;
-    
-    unsigned long long _fileSize;
-}
+@interface DDLogFileInfo () 
 
 @end
 

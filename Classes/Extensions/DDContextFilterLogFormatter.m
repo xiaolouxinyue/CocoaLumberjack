@@ -20,24 +20,11 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-@interface DDLoggingContextSet : NSObject
-
-- (void)addToSet:(NSUInteger)loggingContext;
-- (void)removeFromSet:(NSUInteger)loggingContext;
-
-@property (readonly, copy) NSArray *currentSet;
-
-- (BOOL)isInSet:(NSUInteger)loggingContext;
-
-@end
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDContextWhitelistFilterLogFormatter () {
-    DDLoggingContextSet *_contextSet;
-}
+@interface DDContextWhitelistFilterLogFormatter () 
 
 @end
 
@@ -82,9 +69,7 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDContextBlacklistFilterLogFormatter () {
-    DDLoggingContextSet *_contextSet;
-}
+@interface DDContextBlacklistFilterLogFormatter () 
 
 @end
 
@@ -130,10 +115,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-@interface DDLoggingContextSet () {
-    pthread_mutex_t _mutex;
-    NSMutableSet *_set;
-}
+@interface DDLoggingContextSet ()
 
 @end
 

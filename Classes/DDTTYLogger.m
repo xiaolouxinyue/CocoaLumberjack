@@ -117,19 +117,7 @@
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface DDTTYLogger () {
-    NSString *_appName;
-    char *_app;
-    size_t _appLen;
-    
-    NSString *_processID;
-    char *_pid;
-    size_t _pidLen;
-    
-    BOOL _colorsEnabled;
-    NSMutableArray *_colorProfilesArray;
-    NSMutableDictionary *_colorProfilesDict;
-}
+@interface DDTTYLogger () 
 
 @end
 
@@ -145,6 +133,8 @@ static NSArray *codes_bg = nil;
 static NSArray *colors   = nil;
 
 static DDTTYLogger *sharedInstance;
+
+@synthesize automaticallyAppendNewlineForCustomFormatters = _automaticallyAppendNewlineForCustomFormatters;
 
 /**
  * Initializes the colors array, as well as the codes_fg and codes_bg arrays, for 16 color mode.

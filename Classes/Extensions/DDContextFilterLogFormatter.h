@@ -22,6 +22,20 @@
 
 #import "DDLog.h"
 
+@interface DDLoggingContextSet : NSObject {
+    pthread_mutex_t _mutex;
+    NSMutableSet *_set;
+}
+
+- (void)addToSet:(NSUInteger)loggingContext;
+- (void)removeFromSet:(NSUInteger)loggingContext;
+
+@property (readonly, copy) NSArray *currentSet;
+
+- (BOOL)isInSet:(NSUInteger)loggingContext;
+
+@end
+
 /**
  * This class provides a log formatter that filters log statements from a logging context not on the whitelist.
  *
@@ -41,7 +55,9 @@
  * For example, logically separate parts of your app each have a different logging context.
  * Also 3rd party frameworks that make use of Lumberjack generally use their own dedicated logging context.
  **/
-@interface DDContextWhitelistFilterLogFormatter : NSObject <DDLogFormatter>
+@interface DDContextWhitelistFilterLogFormatter : NSObject <DDLogFormatter>{
+    DDLoggingContextSet *_contextSet;
+}
 
 /**
  *  Designated default initializer
@@ -83,7 +99,9 @@
 /**
  * This class provides a log formatter that filters log statements from a logging context on the blacklist.
  **/
-@interface DDContextBlacklistFilterLogFormatter : NSObject <DDLogFormatter>
+@interface DDContextBlacklistFilterLogFormatter : NSObject <DDLogFormatter>{
+    DDLoggingContextSet *_contextSet;
+}
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 

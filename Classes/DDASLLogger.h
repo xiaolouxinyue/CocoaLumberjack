@@ -14,6 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import <Foundation/Foundation.h>
+#import <asl.h>
 
 // Disable legacy macros
 #ifndef DD_LEGACY_MACROS
@@ -41,7 +42,9 @@ extern const char* const kDDASLDDLogValue;
  * However, if you instead choose to use file logging (for faster performance),
  * you may choose to use a file logger and a tty logger.
  **/
-@interface DDASLLogger : DDAbstractLogger <DDLogger>
+@interface DDASLLogger : DDAbstractLogger <DDLogger>{
+    aslclient _client;
+}
 
 /**
  *  Singleton method

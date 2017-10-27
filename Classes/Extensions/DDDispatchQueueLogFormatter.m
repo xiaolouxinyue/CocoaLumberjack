@@ -21,19 +21,7 @@
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-@interface DDDispatchQueueLogFormatter () {
-    DDDispatchQueueLogFormatterMode _mode;
-    NSString *_dateFormatterKey;
-    
-    int32_t _atomicLoggerCount;
-    NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
-    
-    pthread_mutex_t _mutex;
-    
-    NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
-    NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
-    NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
-}
+@interface DDDispatchQueueLogFormatter () 
 
 @end
 

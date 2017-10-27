@@ -208,6 +208,9 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
  */
 @interface DDLog : NSObject
 
+// An array used to manage all the individual loggers.
+// The array is only modified on the loggingQueue/loggingThread.
+@property (nonatomic, strong) NSMutableArray *_loggers;
 /**
  *  Returns the singleton `DDLog`.
  *  The instance is used by `DDLog` class methods.
@@ -897,6 +900,12 @@ typedef NS_OPTIONS(NSInteger, DDLogMessageOptions){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface DDLoggerInformation : NSObject
+{
+    // Direct accessors to be used only for performance
+@public
+    id <DDLogger> _logger;
+    DDLogLevel _level;
+}
 
 @property (nonatomic, readonly) id <DDLogger> logger;
 @property (nonatomic, readonly) DDLogLevel level;

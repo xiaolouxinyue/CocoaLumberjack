@@ -179,7 +179,14 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  *
  * Archived log files are automatically deleted according to the `maximumNumberOfLogFiles` property.
  **/
-@interface DDLogFileManagerDefault : NSObject <DDLogFileManager>
+@interface DDLogFileManagerDefault : NSObject <DDLogFileManager> {
+    NSUInteger _maximumNumberOfLogFiles;
+    unsigned long long _logFilesDiskQuota;
+    NSString *_logsDirectory;
+#if TARGET_OS_IPHONE
+    NSFileProtectionType _defaultFileProtectionLevel;
+#endif
+}
 
 /**
  *  Default initializer
@@ -281,7 +288,9 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * In addition to the convenience of having a logical default formatter,
  * it will also provide a template that makes it easy for developers to copy and change.
  **/
-@interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>
+@interface DDLogFileFormatterDefault : NSObject <DDLogFormatter>{
+    NSDateFormatter *_dateFormatter;
+}
 
 /**
  *  Default initializer
@@ -304,8 +313,19 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  */
 @interface DDFileLogger : DDAbstractLogger <DDLogger> {
 	DDLogFileInfo *_currentLogFileInfo;
-}
 
+    __strong id <DDLogFileManager> logFileManager;
+    BOOL _automaticallyAppendNewlineForCustomFormatters;
+    BOOL _doNotReuseLogFiles;
+    
+    NSFileHandle *_currentLogFileHandle;
+    
+    dispatch_source_t _currentLogFileVnode;
+    dispatch_source_t _rollingTimer;
+    
+    unsigned long long _maximumFileSize;
+    NSTimeInterval _rollingFrequency;
+}
 /**
  *  Default initializer
  */
@@ -439,7 +459,17 @@ extern unsigned long long const kDDDefaultLogFilesDiskQuota;
  * If you absolutely must get updated values,
  * you can invoke the reset method which will clear the cache.
  **/
-@interface DDLogFileInfo : NSObject
+@interface DDLogFileInfo : NSObject{
+    __strong NSString *filePath;
+    __strong NSString *_fileName;
+    
+    __strong NSDictionary *_fileAttributes;
+    
+    __strong NSDate *_creationDate;
+    __strong NSDate *_modificationDate;
+    
+    unsigned long long _fileSize;
+}
 
 @property (strong, nonatomic, readonly) NSString *filePath;
 @property (strong, nonatomic, readonly) NSString *fileName;

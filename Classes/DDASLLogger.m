@@ -14,7 +14,7 @@
 //   prior written permission of Deusty, LLC.
 
 #import "DDASLLogger.h"
-#import <asl.h>
+
 
 #if !__has_feature(objc_arc)
 #error This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -26,9 +26,7 @@ const char* const kDDASLDDLogValue = "1";
 
 static DDASLLogger *sharedInstance;
 
-@interface DDASLLogger () {
-    aslclient _client;
-}
+@interface DDASLLogger () 
 
 @end
 

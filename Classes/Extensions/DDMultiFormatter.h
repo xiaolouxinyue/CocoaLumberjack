@@ -26,7 +26,10 @@
  * This formatter can be used to chain different formatters together.
  * The log message will processed in the order of the formatters added.
  **/
-@interface DDMultiFormatter : NSObject <DDLogFormatter>
+@interface DDMultiFormatter : NSObject <DDLogFormatter>{
+    dispatch_queue_t _queue;
+    NSMutableArray *_formatters;
+}
 
 /**
  *  Array of chained formatters

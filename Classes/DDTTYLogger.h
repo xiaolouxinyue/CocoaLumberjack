@@ -57,7 +57,20 @@
  * However, if you instead choose to use file logging (for faster performance),
  * you may choose to use only a file logger and a tty logger.
  **/
-@interface DDTTYLogger : DDAbstractLogger <DDLogger>
+@interface DDTTYLogger : DDAbstractLogger <DDLogger>{
+    NSString *_appName;
+    char *_app;
+    size_t _appLen;
+    
+    NSString *_processID;
+    char *_pid;
+    size_t _pidLen;
+    
+    BOOL _colorsEnabled;
+    NSMutableArray *_colorProfilesArray;
+    NSMutableDictionary *_colorProfilesDict;
+    BOOL _automaticallyAppendNewlineForCustomFormatters;
+}
 
 /**
  *  Singleton method

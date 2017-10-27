@@ -19,7 +19,9 @@
 /**
  * This class represents an NSColor replacement for CLI projects that don't link with AppKit
  **/
-@interface CLIColor : NSObject
+@interface CLIColor : NSObject{
+    CGFloat _red, _green, _blue, _alpha;
+}
 
 /**
  *  Convenience method for creating a `CLIColor` instance from RGBA params

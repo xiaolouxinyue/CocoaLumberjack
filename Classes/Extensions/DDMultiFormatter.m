@@ -41,10 +41,7 @@
 #endif
 
 
-@interface DDMultiFormatter () {
-    dispatch_queue_t _queue;
-    NSMutableArray *_formatters;
-}
+@interface DDMultiFormatter () 
 
 - (DDLogMessage *)logMessageForLine:(NSString *)line originalMessage:(DDLogMessage *)message;
 

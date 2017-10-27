@@ -98,13 +98,11 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
 
 @interface DDLog ()
 
-// An array used to manage all the individual loggers.
-// The array is only modified on the loggingQueue/loggingThread.
-@property (nonatomic, strong) NSMutableArray *_loggers;
-
 @end
 
 @implementation DDLog
+
+@dynamic _loggers;
 
 // All logging statements are added to the same queue to ensure FIFO operation.
 static dispatch_queue_t _loggingQueue;
@@ -968,6 +966,10 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 
 @implementation DDLoggerNode
 
+@synthesize logger = _logger;
+@synthesize loggerQueue = _loggerQueue;
+@synthesize level = _level;
+
 - (instancetype)initWithLogger:(id <DDLogger>)logger loggerQueue:(dispatch_queue_t)loggerQueue level:(DDLogLevel)level {
     if ((self = [super init])) {
         _logger = logger;
@@ -1003,6 +1005,22 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation DDLogMessage
+
+@synthesize message = _message;
+@synthesize level = _level;
+@synthesize flag = _flag;
+@synthesize context = _context;
+@synthesize file = _file;
+@synthesize fileName = _fileName;
+@synthesize function = _function;
+@synthesize line = _line;
+@synthesize tag = _tag;
+@synthesize options = _options;
+@synthesize timestamp = _timestamp;
+@synthesize threadID= _threadID;
+@synthesize threadName = _threadName;
+@synthesize queueLabel = _queueLabel;
+
 
 // Can we use DISPATCH_CURRENT_QUEUE_LABEL ?
 // Can we use dispatch_get_current_queue (without it crashing) ?
@@ -1208,6 +1226,9 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
 
 @implementation DDAbstractLogger
 
+@synthesize loggerQueue = _loggerQueue;
+@synthesize logFormatter =  _logFormatter;
+
 - (instancetype)init {
     if ((self = [super init])) {
         const char *loggerQueueName = NULL;
@@ -1377,16 +1398,14 @@ static __inline__ __attribute__((__always_inline__)) void _dispatch_queue_label_
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface DDLoggerInformation()
-{
-    // Direct accessors to be used only for performance
-    @public
-    id <DDLogger> _logger;
-    DDLogLevel _level;
-}
+
 
 @end
 
 @implementation DDLoggerInformation
+
+@synthesize logger = _logger;
+@synthesize level = _level;
 
 - (instancetype)initWithLogger:(id <DDLogger>)logger andLevel:(DDLogLevel)level {
     if ((self = [super init])) {

@@ -77,7 +77,19 @@ typedef NS_ENUM(NSUInteger, DDDispatchQueueLogFormatterMode){
  * Note: If manually creating your own background threads (via `NSThread/alloc/init` or `NSThread/detachNeThread`),
  * you can use `[[NSThread currentThread] setName:(NSString *)]`.
  **/
-@interface DDDispatchQueueLogFormatter : NSObject <DDLogFormatter>
+@interface DDDispatchQueueLogFormatter : NSObject <DDLogFormatter>{
+    DDDispatchQueueLogFormatterMode _mode;
+    NSString *_dateFormatterKey;
+    
+    int32_t _atomicLoggerCount;
+    NSDateFormatter *_threadUnsafeDateFormatter; // Use [self stringFromDate]
+    
+    pthread_mutex_t _mutex;
+    
+    NSUInteger _minQueueLength;           // _prefix == Only access via atomic property
+    NSUInteger _maxQueueLength;           // _prefix == Only access via atomic property
+    NSMutableDictionary *_replacements;   // _prefix == Only access from within spinlock
+}
 
 /**
  * Standard init method.

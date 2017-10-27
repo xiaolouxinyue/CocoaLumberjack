@@ -15,9 +15,7 @@
 
 #import "CLIColor.h"
 
-@interface CLIColor () {
-    CGFloat _red, _green, _blue, _alpha;
-}
+@interface CLIColor () 
 
 @end
 
