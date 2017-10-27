@@ -102,7 +102,7 @@ static void *const GlobalLoggingQueueIdentityKey = (void *)&GlobalLoggingQueueId
 
 @implementation DDLog
 
-@dynamic _loggers;
+@synthesize _loggers;
 
 // All logging statements are added to the same queue to ensure FIFO operation.
 static dispatch_queue_t _loggingQueue;
@@ -1017,7 +1017,7 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
 @synthesize tag = _tag;
 @synthesize options = _options;
 @synthesize timestamp = _timestamp;
-@synthesize threadID= _threadID;
+@synthesize threadID = _threadID;
 @synthesize threadName = _threadName;
 @synthesize queueLabel = _queueLabel;
 

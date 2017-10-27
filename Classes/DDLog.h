@@ -206,7 +206,9 @@ NSString * __nullable DDExtractFileNameWithoutExtension(const char *filePath, BO
  *  The main class, exposes all logging mechanisms, loggers, ...
  *  For most of the users, this class is hidden behind the logging functions like `DDLogInfo`
  */
-@interface DDLog : NSObject
+@interface DDLog : NSObject{
+    NSMutableArray *_loggers;
+}
 
 // An array used to manage all the individual loggers.
 // The array is only modified on the loggingQueue/loggingThread.
